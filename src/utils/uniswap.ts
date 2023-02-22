@@ -52,7 +52,6 @@ export const getAmountOut = async (
   try {
     const inputToken = getTokenBySymbol(inputTokenSymbol);
     const outputToken = getTokenBySymbol(outputTokenSymbol);
-    console.log('siema', process.env.NEXT_PUBLIC_INFURA_TEST_URL);
 
     if (!inputToken || !outputToken) {
       throw new Error('Invalid token symbol');

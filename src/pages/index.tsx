@@ -16,9 +16,14 @@ const App = () => {
 
   const handleSwap = async () => {
     setIsLoading(true);
-    const result = await getAmountOut(fromToken, toToken, amountIn);
-    setIsLoading(false);
-    setSwapResult(result);
+    try {
+      const result = await getAmountOut(fromToken, toToken, amountIn);
+      setSwapResult(result);
+    } catch (error) {
+      console.error('Error occurred while swapping:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -72,7 +77,7 @@ const App = () => {
       </select>
       <button
         onClick={handleSwap}
-        disabled={isLoading || fromToken === toToken}
+        disabled={isLoading || fromToken === toToken || !amountIn}
         className="mt-4 px-4 py-2 font-bold text-white bg-blue-500 rounded-md shadow-md focus:outline-none hover:bg-blue-600 disabled:opacity-50"
       >
         {isLoading ? 'Swapping...' : 'Swap'}
