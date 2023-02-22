@@ -10,12 +10,12 @@ const App = () => {
   const [fromToken, setFromToken] = useState<keyof typeof TokenSymbol>('USDC');
   const [toToken, setToToken] = useState<keyof typeof TokenSymbol>('WETH');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setAmountIn(e.target.value);
     setSwapResult({});
   };
 
-  const handleSwap = async () => {
+  const handleSwap = async (): Promise<void> => {
     setIsLoading(true);
     try {
       const result = await getAmountOut(fromToken, toToken, amountIn);
@@ -27,13 +27,17 @@ const App = () => {
     }
   };
 
-  const handleFromTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleFromTokenChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ): void => {
     const selectedToken = e.target.value as keyof typeof TokenSymbol;
     setFromToken(selectedToken);
     setSwapResult({});
   };
 
-  const handleToTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleToTokenChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ): void => {
     const selectedToken = e.target.value as keyof typeof TokenSymbol;
     setToToken(selectedToken);
     setSwapResult({});
