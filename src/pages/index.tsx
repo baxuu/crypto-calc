@@ -86,7 +86,7 @@ const App = () => {
         <div className="mt-4">
           Optimal swap path:
           <span className="font-bold ml-2">
-            {swapResult.path.join(' --> ')}
+            {swapResult.path.join(` ${String.fromCharCode(8594)} `)}
           </span>
         </div>
       )}
