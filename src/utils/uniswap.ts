@@ -4,25 +4,9 @@ import JSBI from 'jsbi';
 import { ethers } from 'ethers';
 
 import { CurrencyAmount, Token } from '@uniswap/sdk-core';
-import { TokenSymbol, ChainId } from '@/types/constants';
+import { tokenMap, ChainId } from '@/types/constants';
 
 import { AlphaRouter } from '@uniswap/smart-order-router';
-
-const tokenMap: TokenMap = {
-  [TokenSymbol.USDC]: {
-    address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-    decimals: 6,
-    symbol: TokenSymbol.USDC,
-    name: 'USD Coin',
-  },
-  [TokenSymbol.WETH]: {
-    address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-    decimals: 18,
-    symbol: TokenSymbol.WETH,
-    name: 'Wrapped Ether',
-  },
-  // ...
-};
 
 const chainId = ChainId.MAINNET;
 

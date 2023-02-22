@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { getAmountOut } from '@/utils/uniswap';
-import { TokenSymbol } from '@/types/constants';
+import { TokenSymbol, tokenMap } from '@/types/constants';
 
 const App = () => {
   const [amountIn, setAmountIn] = useState('');
@@ -12,6 +12,7 @@ const App = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmountIn(e.target.value);
+    setSwapResult({});
   };
 
   const handleSwap = async () => {
@@ -24,6 +25,18 @@ const App = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleFromTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedToken = e.target.value as keyof typeof TokenSymbol;
+    setFromToken(selectedToken);
+    setSwapResult({});
+  };
+
+  const handleToTokenChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedToken = e.target.value as keyof typeof TokenSymbol;
+    setToToken(selectedToken);
+    setSwapResult({});
   };
 
   return (
@@ -52,9 +65,7 @@ const App = () => {
         id="fromToken"
         name="fromToken"
         value={fromToken}
-        onChange={(e) => {
-          setFromToken(e.target.value as keyof typeof TokenSymbol);
-        }}
+        onChange={handleFromTokenChange}
         disabled={isLoading}
         className="w-64 px-3 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
       >
@@ -67,13 +78,17 @@ const App = () => {
         id="toToken"
         name="toToken"
         value={toToken}
-        onChange={(e) => {
-          setToToken(e.target.value as keyof typeof TokenSymbol);
-        }}
+        onChange={handleToTokenChange}
         disabled={isLoading}
         className="w-64 px-3 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
       >
-        <option value="WETH">WETH</option>
+        {Object.values(tokenMap)
+          .filter((token) => token.symbol !== TokenSymbol.USDC)
+          .map((token) => (
+            <option key={token.symbol} value={token.symbol}>
+              {token.symbol}
+            </option>
+          ))}
       </select>
       <button
         onClick={handleSwap}
